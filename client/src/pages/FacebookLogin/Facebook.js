@@ -24,6 +24,8 @@ componentDidMoun(){
       email: response.email,
       picture: response.picture.data.url
     });
+    sessionStorage.setItem(JSON.stringify(response));
+
   };
 
   componentClicked = () => console.log("clicked");
