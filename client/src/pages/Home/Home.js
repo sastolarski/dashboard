@@ -31,6 +31,8 @@ class Home extends Component  {
 componentDidMount(){
     console.log("Mounted")
     console.log(this.props.match.params.id)
+    let userss = sessionStorage.getItem("userName");
+    console.log(userss)
     // ('/home/:id', function(request, response){
     //     console.log(request.params.id)
     //       })
@@ -38,6 +40,7 @@ componentDidMount(){
 
 
 render() {
+    
         return (
     <Container fluid>
         <h1>Home Page</h1>

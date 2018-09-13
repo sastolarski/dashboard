@@ -24,7 +24,9 @@ componentDidMoun(){
       email: response.email,
       picture: response.picture.data.url
     });
-    sessionStorage.setItem(JSON.stringify(response));
+    sessionStorage.setItem("userName", JSON.stringify(response.name));
+    
+
 
   };
 
