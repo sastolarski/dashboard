@@ -70,6 +70,7 @@ populateNotes = () => {
     var noteTitles = [];
     API.getUserData( "nathan.fazzio@g.austincc.edu" )
         .then( res => {
+            if(res.data){
             for ( var n = 0; n < res.data.notes.length; n++ ) {
                 noteTitles.push( res.data.notes[n].title );
                 notes.push( res.data.notes[n].body );
@@ -77,17 +78,17 @@ populateNotes = () => {
             this.setState( { noteTitles: noteTitles } );
             this.setState( { notes: notes } );
 
-        } )
+        }} ) 
 }
 populateToDo = () => {
     var toDo = [];
     API.getUserData( "nathan.fazzio@g.austincc.edu" )
         .then( res => {
-
+            if(res.data) {
             for ( var n = 0; n < res.data.toDo.length; n++ ) {
                 toDo.push( res.data.toDo[n].toDoItem );
             }
-        }
+        }}
         )
     setTimeout(this.setState( { toDo: toDo } ), 1400);
 }

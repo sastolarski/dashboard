@@ -14,6 +14,7 @@ class CalendarPage extends Component {
         monthVariable: '',
         monthStart: moment().startOf( 'month' ).format( "dddd" ),
         thisMonthDays: moment( moment().format( "YYYY" + "-" + "MM" ), "YYYY-MM" ).daysInMonth(),
+        email : JSON.parse(sessionStorage.getItem('email')),
         newMonthDays: 0,
         weekDayCalendar: moment.weekdays(),
         weekDays: moment.weekdays().toString().split( "," ),
@@ -190,10 +191,11 @@ class CalendarPage extends Component {
 
     getNewMonthNotes = () => {
         var id = {
-            email: "nathan.fazzio@g.austincc.edu"
+            email: this.state.email
         }
-        API.getUserData( "nathan.fazzio@g.austincc.edu" )
+        API.getUserData( this.state.email )
             .then( res => {
+                if(res.data) {
                 var thisDate = this.state.thisMonth + "-" + this.state.thisYear;
                 console.log( thisDate );
                 this.clearDayStates();
@@ -232,8 +234,8 @@ class CalendarPage extends Component {
                         this.setState( { day31: res.data.calendarData[n].data[30].dayNote } );
                     }
 
-                }
-                if ( res.data.calendarData )
+                }}
+                if ( res.data )
                     console.log( res.data.calendarData )
             }
             )
@@ -241,8 +243,9 @@ class CalendarPage extends Component {
     calendarSave = ( event ) => {
         // event.preventDefault();
         let dayNotes = [];
+
         var data = {
-            email: "nathan.fazzio@g.austincc.edu",
+            email: this.state.email,
             method: "calendar",
             monthYear: this.state.thisMonth + "-" + this.state.thisYear,
             dayNotes: [

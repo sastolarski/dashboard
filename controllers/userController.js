@@ -154,7 +154,7 @@ module.exports = {
       console.log( "calendar req body" )
       console.dir( req.body )
       db.User
-        .findOne( { email: "nathan.fazzio@g.austincc.edu" }, function ( err, result ) {
+        .findOne( { email: req.body.email }, function ( err, result ) {
           // result.calendarData.push( { monthYear: "note 1", data:{day:1, note:"is ths working?"}} );
           // result.calendarData.push( { monthYear: "note 2", data:{day:1, note:"is ths working?"}} );
 
