@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import FacebookLogin from "react-facebook-login";
 // import db from "../../../../controllers/";
+import API from "../../utils/API";
 
 export default class Facebook extends Component {
   state = {
-    isLoggedIn: false,
+    loggedIn: false,
     userID: "",
     name: "",
     email: "",
@@ -15,17 +16,44 @@ componentDidMoun(){
 }
   //un comment this console log to see all the data returned from facebook on login
   responseFacebook = response => {
-    console.log(response);
+    console.log(response.name);
+    // populate users api
+    API.getUsers()
+    .then( res =>
+        console.log( "23 facebook" )
+    )
+    .catch( err => console.log( err ) );
 
+    // set state for the  user
     this.setState({
       isLoggedIn: true,
-      userID: response.userID,
-      name: response.name,
+      user: response.name,
       email: response.email,
-      picture: response.picture.data.url
+      picture: response.picture.data.url,
+      user: response
+    },()=>{
+      const user = [{
+        user: response.name
+      }];
+    // set session storage
+    console.log("::::")
+       sessionStorage.setItem("userName", JSON.stringify(response.name));
+       sessionStorage.setItem("email", JSON.stringify(response.email));
+
+       //check for user
+       console.log("42")
+      API.checkForUser(response);
+      console.log(response)
+      // create user
+      API.createUser(response);
+    // console.log(user)
+    console.log(response)
     });
-    sessionStorage.setItem("userName", JSON.stringify(response.name));
-    
+    API.getUsers()
+    .then( res =>
+        console.log( '49 facebook' )
+    )
+    .catch( err => console.log( "err" ) );
 
 
   };

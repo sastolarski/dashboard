@@ -11,6 +11,7 @@ mongoose.connect(
 const userSeed = [
   {
     user: "Nathan F",
+    email:"n@f.com",
     toDo:[{toDoItem:"eat"},{toDoItem:"sleep"}],
     notes:[{title: "todo", body: "todobody"},{title: "todo2", body: "todobody2"}],
     date: new Date(Date.now()),
@@ -18,10 +19,7 @@ const userSeed = [
       Note: [{day:"32-12-1999", dayNote:"this is a daynote"},{day:"32-122-1999", dayNote:"this is a daynote2"}],
     },{monthYear:"2000",
     Note:[{day:"2-2-2222", dayNote:"this is note for 2222"}, {day:"11-11-1111", dayNote:"this is 1111"}]}],
-    meta:[{
-      votes:0,
-      favs:0,
-    }]
+ 
   }
 ];
 

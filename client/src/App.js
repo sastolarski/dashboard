@@ -10,11 +10,17 @@ import WorkSpace from "./pages/Workspace/index";
 import Facebook from "./pages/FacebookLogin";
 
 import "./App.css";
-
+var logout =function (){
+  sessionStorage.setItem("userName", "null");
+  sessionStorage.setItem("email", "null");
+}
 const App = () =>
+
   <Router>
     <div>
-      <Nav />
+      <Nav 
+      logout={logout}
+      />
       <div style={{height:50+"px", backgroundColor:"blue", position:"static"}}></div>
 
       <Switch>
