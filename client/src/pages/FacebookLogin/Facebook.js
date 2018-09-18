@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import FacebookLogin from "react-facebook-login";
+
 // import db from "../../../../controllers/";
 import API from "../../utils/API";
+import { SSL_OP_NETSCAPE_CHALLENGE_BUG } from "constants";
 
 export default class Facebook extends Component {
   state = {
@@ -59,7 +61,7 @@ componentDidMoun(){
   };
 
   componentClicked = () => console.log("clicked");
-
+ 
   render() {
     let fbContent;
 
@@ -78,6 +80,7 @@ componentDidMoun(){
           Email: {this.state.email}
         </div>
       );
+
     } else {
       fbContent = (
         <FacebookLogin
