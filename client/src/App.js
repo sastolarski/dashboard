@@ -31,22 +31,14 @@ const App = () =>
       <Provider>
         <Switch>
 
-          <Route exact path="/" render={() => (
-            sessionStorage.getItem("email", null) ? (
-              <Facebook />
-            ) : (
-                <Redirect to="/home" />
-              )
-          )} />
-
-          <Route exact path="/home" component={Home} />
+          <Route exact path="/" component={Home} />
           <Route exact path="/calendar" component={Calendar} />
           <Route exact path="/news" component={News} />
           <Route exact path="/contacts" component={Contacts} />
           <Route exact path="/contacts/add" component={AddContact} />
           <Route exact path="/contacts/edit/:id" component={EditContact} />
           <Route exact path="/workspace" component={WorkSpace} />
-          {/* <Route exact path="/login" component={Facebook} /> */}
+          <Route exact path="/login" component={Facebook} />
           <Route path="/home/:id" component={Home} />
           <Route component={NoMatch} />
         </Switch>

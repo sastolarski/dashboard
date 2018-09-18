@@ -71,7 +71,7 @@ findToDo = ( index ) => {
 populateNotes = () => {
     var notes = [];
     var noteTitles = [];
-    API.getUserData( "nathan.fazzio@g.austincc.edu" )
+    API.getUserData( this.state.email )
         .then( res => {
             if (res.data){
             for ( var n = 0; n < res.data.notes.length; n++ ) {
@@ -87,8 +87,9 @@ populateNotes = () => {
 populateBlog= () => {
     var blog = [];
     var blogTitles = [];
-    API.getUserData( "nathan.fazzio@g.austincc.edu" )
+    API.getUserData( this.state.email )
         .then( res => {
+            if(res.data) {
             for ( var n = 0; n < res.data.blogs.length; n++ ) {
                 blogTitles.push( res.data.blogs[n].blogTitle );
                 blog.push( res.data.blogs[n].blogText );
@@ -96,7 +97,7 @@ populateBlog= () => {
             this.setState( { blogTitles: blogTitles } );
             this.setState( { blog: blog } );
 
-        } )
+        }} )
 }
 findBlog = ( index ) => {
     console.log( this.state.blog[index] )
@@ -107,7 +108,7 @@ findBlog = ( index ) => {
 populateToDo = () => {
     var toDo = [];
     
-    API.getUserData( "nathan.fazzio@g.austincc.edu" )
+    API.getUserData( this.state.email )
         .then( res => {
             if (res.data){
 

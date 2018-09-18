@@ -91,8 +91,9 @@ class WorkSpace extends Component {
     populateBlog= () => {
         var blog = [];
         var blogTitles = [];
-        API.getUserData( "nathan.fazzio@g.austincc.edu" )
+        API.getUserData( this.state.email )
             .then( res => {
+                if(res.data) {
                 for ( var n = 0; n < res.data.blogs.length; n++ ) {
                     blogTitles.push( res.data.blogs[n].blogTitle );
                     blog.push( res.data.blogs[n].blogText );
@@ -100,7 +101,7 @@ class WorkSpace extends Component {
                 this.setState( { blogTitles: blogTitles } );
                 this.setState( { blog: blog } );
 
-            } )
+            }} )
     }
     populateToDo = () => {
         var toDo = [];
