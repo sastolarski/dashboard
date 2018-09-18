@@ -23,7 +23,6 @@ module.exports = {
     console.log( "RPID" )
     // console.log(req)
     console.log( req.params.id )
-    console.log( "RPID" )
 
     db.User
       .findOne( { email: req.params.id } )
@@ -123,6 +122,22 @@ module.exports = {
         .findOne( { email: req.body.email } )
         .then( function ( record ) {
           record.toDo.push( { toDoItem: req.body.toDo } );
+          record.save().then( function () {
+            db.User
+              .findOne( { email: req.body.email } ).then( function ( result ) {
+                console.log( "record written" );
+              } );
+          } );
+
+        } )
+        .catch( e => res.status( 400 ).send( e ) ); console.log( "BAD" );
+    }
+    if ( method === "blog" ) {
+      console.log(req.body.blogTitle)
+      db.User
+        .findOne( { email: req.body.email } )
+        .then( function ( record ) {
+          record.blogs.push( { blogText: req.body.blog, blogTitle: req.body.blogTitle } );
           record.save().then( function () {
             db.User
               .findOne( { email: req.body.email } ).then( function ( result ) {

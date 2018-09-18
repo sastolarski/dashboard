@@ -85,7 +85,6 @@ class CalendarPage extends Component {
     setInitialStates = () => {
         //set the month and delete the initial 0 if a single digit month
         var month = parseInt( moment().format( "MM" ) ).toString();
-
         this.setState( { thisMonth: month } );
         this.setState( { thisYear: moment().format( "YYYY" ) } )
         var daysarr = Array.apply( null, Array( this.state.thisMonthDays ) ).map( function ( x, i ) { return i + 1 } );

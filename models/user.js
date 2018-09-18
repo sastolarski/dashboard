@@ -21,8 +21,8 @@ var toDoList = new Schema( {
 } );
 
 var Blog = new Schema({
-    blotTitle: String,
-    blogText: String
+    blogTitle: { type: String, default: "11" },
+    blogText: { type: String, default: "11" }
 })
 
 var userSchema = new Schema( {
@@ -35,8 +35,8 @@ var userSchema = new Schema( {
     notes: [notes],
     blogs:[Blog],
     links:[{
-        name:String,
-        link:String
+        name:{ type: String, default: "11" },
+        link:{ type: String, default: "11" },
     }],
     date: { type: Date, default: Date.now },
     calendarData: [Calendar],

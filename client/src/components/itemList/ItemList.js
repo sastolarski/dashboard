@@ -28,7 +28,8 @@ const ItemList = ( props ) => (
                     <div id="Demo2" className={props.hidden2 + " w3-container"} >
                     {props.toDo.map( function ( i, index ) {
                             return <p style={{textIndent: 3+"%", color:"grey"}} onClick={() => { props.findToDo( index ) }}>{i}</p>
-                        } )}                    </div>
+                        } )}                    
+                        </div>
                     <button onClick={() => { props.listDisplay( props.list3, "showList3" ) }} className="w3-button  w3-hover-black w3-block  w3-left-align">
                         <i className="fa fa-users fa-fw w3-margin-right">  Blogs</i>
                         {/* 3rd ITEM */}
@@ -37,7 +38,9 @@ const ItemList = ( props ) => (
 
                     </button>
                     <div id="Demo3" className={props.hidden3 + " w3-container"} >
-
+                    {props.blog.map( function ( i, index ) {
+                            return <p style={{textIndent: 3+"%", color:"grey"}} onClick={() => { props.findBlog( index ) }}>{i}</p>
+                        } )}
                         <div className="w3-row-padding">
 
              

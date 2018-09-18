@@ -13,6 +13,8 @@ import API from "../../utils/API";
 
 class Home extends Component  {
     state={
+        blog:[],
+        blogTitles:[],
         text:"",
         noteTitles: [],
         notes: [],
@@ -42,6 +44,7 @@ class Home extends Component  {
 componentDidMount(){
     this.populateNotes();
     this.populateToDo();
+    this.populateBlog();
     console.log("Mounted");
     console.log(this.state.email);
     let userss = sessionStorage.getItem("userName");
@@ -70,7 +73,7 @@ populateNotes = () => {
     var noteTitles = [];
     API.getUserData( "nathan.fazzio@g.austincc.edu" )
         .then( res => {
-            if(res.data){
+            if (res.data){
             for ( var n = 0; n < res.data.notes.length; n++ ) {
                 noteTitles.push( res.data.notes[n].title );
                 notes.push( res.data.notes[n].body );
@@ -78,13 +81,36 @@ populateNotes = () => {
             this.setState( { noteTitles: noteTitles } );
             this.setState( { notes: notes } );
 
-        }} ) 
+        }} )
+    
 }
-populateToDo = () => {
-    var toDo = [];
+populateBlog= () => {
+    var blog = [];
+    var blogTitles = [];
     API.getUserData( "nathan.fazzio@g.austincc.edu" )
         .then( res => {
-            if(res.data) {
+            for ( var n = 0; n < res.data.blogs.length; n++ ) {
+                blogTitles.push( res.data.blogs[n].blogTitle );
+                blog.push( res.data.blogs[n].blogText );
+            }
+            this.setState( { blogTitles: blogTitles } );
+            this.setState( { blog: blog } );
+
+        } )
+}
+findBlog = ( index ) => {
+    console.log( this.state.blog[index] )
+    var text = this.state.blog[index];
+    this.setState( { text: text } );
+    console.log( this.state.text );
+};
+populateToDo = () => {
+    var toDo = [];
+    
+    API.getUserData( "nathan.fazzio@g.austincc.edu" )
+        .then( res => {
+            if (res.data){
+
             for ( var n = 0; n < res.data.toDo.length; n++ ) {
                 toDo.push( res.data.toDo[n].toDoItem );
             }
@@ -109,6 +135,7 @@ render() {
         name = {JSON.parse(sessionStorage.getItem('userName'))}
         />}
         childComponent1={<ItemList
+            blog={this.state.blogTitles}
             toDo={this.state.toDo}
             findNote={this.findNote}
             findToDo={this.findToDo}
@@ -116,6 +143,8 @@ render() {
     noteTitles={this.state.noteTitles}
     findNote={this.findNote}
     findToDo={this.findToDo}    
+    findBlog={this.findBlog}
+
     list1={this.state.showList1}
     list2={this.state.showList2}
     list3={this.state.showList3}
