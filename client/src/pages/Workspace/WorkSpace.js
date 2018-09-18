@@ -13,6 +13,7 @@ import API from "../../utils/API";
 class WorkSpace extends Component {
     state = {
         noteTitles: [],
+        noteTitle: '',
         notes: [],
         newTextTitle: "",
         text: "",
@@ -23,6 +24,7 @@ class WorkSpace extends Component {
         edit: true,
         editorMode: "Edit",
         editorBackground: "#F5F5F5",
+        email : JSON.parse(sessionStorage.getItem('email')),
         fontWeight: 400,
         showList1: false,
         showList2: false,
@@ -64,8 +66,9 @@ class WorkSpace extends Component {
     populateNotes = () => {
         var notes = [];
         var noteTitles = [];
-        API.getUserData( "nathan.fazzio@g.austincc.edu" )
+        API.getUserData( this.state.email )
             .then( res => {
+                if(res.data) {
                 for ( var n = 0; n < res.data.notes.length; n++ ) {
                     noteTitles.push( res.data.notes[n].title );
                     notes.push( res.data.notes[n].body );
@@ -73,17 +76,17 @@ class WorkSpace extends Component {
                 this.setState( { noteTitles: noteTitles } );
                 this.setState( { notes: notes } );
 
-            } )
+            } })
     }
     populateToDo = () => {
         var toDo = [];
-        API.getUserData( "nathan.fazzio@g.austincc.edu" )
+        API.getUserData( this.state.email )
             .then( res => {
-
+                if(res.data) {
                 for ( var n = 0; n < res.data.toDo.length; n++ ) {
                     toDo.push( res.data.toDo[n].toDoItem );
                 }
-            }
+            } }
             )
         setTimeout(this.setState( { toDo: toDo } ), 1400);
     }
@@ -146,7 +149,7 @@ class WorkSpace extends Component {
 
         var data = {
 
-            email: "nathan.fazzio@g.austincc.edu",
+            email: this.state.email,
             method: "saveNote",
             noteTitle: this.state.newTextTitle,
             notes: this.state.text
@@ -159,7 +162,7 @@ class WorkSpace extends Component {
         event.preventDefault();
 
         var data = {
-            email: "nathan.fazzio@g.austincc.edu",
+            email: this.state.email,
             method: "toDo",
             toDo: this.state.text
         }
@@ -199,6 +202,7 @@ class WorkSpace extends Component {
                 <ColMd7
                     childComponent1={<MainNote
                         setTextTitle={this.setTextTitle}
+                        title={this.state.noteTitle}
                         handleChange={this.handleChange}
                         text={this.state.text}
                         fontWeight={this.state.fontWeight}
