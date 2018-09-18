@@ -23,7 +23,6 @@ module.exports = {
     console.log( "RPID" )
     // console.log(req)
     console.log( req.params.id )
-    console.log( "RPID" )
 
     db.User
       .findOne( { email: req.params.id } )
@@ -133,6 +132,22 @@ module.exports = {
         } )
         .catch( e => res.status( 400 ).send( e ) ); console.log( "BAD" );
     }
+    if ( method === "blog" ) {
+      console.log(req.body.blogTitle)
+      db.User
+        .findOne( { email: req.body.email } )
+        .then( function ( record ) {
+          record.blogs.push( { blogText: req.body.blog, blogTitle: req.body.blogTitle } );
+          record.save().then( function () {
+            db.User
+              .findOne( { email: req.body.email } ).then( function ( result ) {
+                console.log( "record written" );
+              } );
+          } );
+
+        } )
+        .catch( e => res.status( 400 ).send( e ) ); console.log( "BAD" );
+    }
     // To update Notes
     if ( method == "note" ) {
       db.User
@@ -154,7 +169,7 @@ module.exports = {
       console.log( "calendar req body" )
       console.dir( req.body )
       db.User
-        .findOne( { email: "nathan.fazzio@g.austincc.edu" }, function ( err, result ) {
+        .findOne( { email: req.body.email }, function ( err, result ) {
           // result.calendarData.push( { monthYear: "note 1", data:{day:1, note:"is ths working?"}} );
           // result.calendarData.push( { monthYear: "note 2", data:{day:1, note:"is ths working?"}} );
 

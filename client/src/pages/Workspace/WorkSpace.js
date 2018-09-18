@@ -12,11 +12,14 @@ import Col1 from "../../components/Col1";
 import API from "../../utils/API";
 class WorkSpace extends Component {
     state = {
+        email : JSON.parse(sessionStorage.getItem('email')),
         noteTitles: [],
         notes: [],
         newTextTitle: "",
         text: "",
         toDo: [],
+        blog:[],
+        blogTitles:[],
         pizza: "yesPlease",
         display: "",
         editTag: "textarea",
@@ -37,6 +40,7 @@ class WorkSpace extends Component {
         console.log( this.state.pizzas )
         this.populateNotes();
         this.populateToDo();
+        this.populateBlog();
     }
     componentDidUpdate() {
         console.log( this.state );
@@ -61,11 +65,18 @@ class WorkSpace extends Component {
         this.setState( { text: text } );
         console.log( this.state.text );
     };
+    findBlog = ( index ) => {
+        console.log( this.state.blog[index] )
+        var text = this.state.blog[index];
+        this.setState( { text: text } );
+        console.log( this.state.text );
+    };
     populateNotes = () => {
         var notes = [];
         var noteTitles = [];
-        API.getUserData( "nathan.fazzio@g.austincc.edu" )
+        API.getUserData(this.state.email)
             .then( res => {
+                if (res.data){
                 for ( var n = 0; n < res.data.notes.length; n++ ) {
                     noteTitles.push( res.data.notes[n].title );
                     notes.push( res.data.notes[n].body );
@@ -73,17 +84,31 @@ class WorkSpace extends Component {
                 this.setState( { noteTitles: noteTitles } );
                 this.setState( { notes: notes } );
 
+            }} )
+    }
+    populateBlog= () => {
+        var blog = [];
+        var blogTitles = [];
+        API.getUserData( "nathan.fazzio@g.austincc.edu" )
+            .then( res => {
+                for ( var n = 0; n < res.data.blogs.length; n++ ) {
+                    blogTitles.push( res.data.blogs[n].blogTitle );
+                    blog.push( res.data.blogs[n].blogText );
+                }
+                this.setState( { blogTitles: blogTitles } );
+                this.setState( { blog: blog } );
+
             } )
     }
     populateToDo = () => {
         var toDo = [];
-        API.getUserData( "nathan.fazzio@g.austincc.edu" )
+        API.getUserData( this.state.email )
             .then( res => {
-
+                if (res.data){
                 for ( var n = 0; n < res.data.toDo.length; n++ ) {
                     toDo.push( res.data.toDo[n].toDoItem );
                 }
-            }
+            }}
             )
         setTimeout(this.setState( { toDo: toDo } ), 1400);
     }
@@ -146,7 +171,7 @@ class WorkSpace extends Component {
 
         var data = {
 
-            email: "nathan.fazzio@g.austincc.edu",
+            email: this.state.email,
             method: "saveNote",
             noteTitle: this.state.newTextTitle,
             notes: this.state.text
@@ -159,13 +184,25 @@ class WorkSpace extends Component {
         event.preventDefault();
 
         var data = {
-            email: "nathan.fazzio@g.austincc.edu",
+            email: this.state.email,
             method: "toDo",
             toDo: this.state.text
+            
         }
         API.updateChildSchema( data );
         this.populateToDo();
+    }
+    saveBlog = ( event ) => {
+        event.preventDefault();
 
+        var data = {
+            email: this.state.email,
+            method: "blog",
+            blog: this.state.text,
+            blogTitle: this.state.newTextTitle
+        }
+        API.updateChildSchema( data );
+        this.populateToDo();
     }
     breaks = () => {
         return <div><br /><br /><br /><br /></div>
@@ -177,9 +214,11 @@ class WorkSpace extends Component {
                 <Col1></Col1>
                 <Col2
                     childComponent1={<ItemList
+                        blog={this.state.blogTitles}
                         list1Title={"notes"}
                         noteTitles={this.state.noteTitles}
                         toDo={this.state.toDo}
+                        findBlog={this.findBlog}
                         findNote={this.findNote}
                         findToDo={this.findToDo}
                         list1={this.state.showList1}
@@ -213,7 +252,7 @@ class WorkSpace extends Component {
                     />}
                     childComponent4={<button onClick={this.saveNote} className="w3-btn w3-round w3-black w3-hover-white">Save Note</button>}
                     childComponent5={<button onClick={this.saveTodo} className="w3-btn w3-round  w3-black w3-hover-white">Save To Do</button>}
-                    childComponent6={<button className="w3-btn w3-round w3-black w3-hover-white">Save Blog</button>}
+                    childComponent6={<button onClick={this.saveBlog} className="w3-btn w3-round w3-black w3-hover-white">Save Blog</button>}
 
                 />
                 <br />
