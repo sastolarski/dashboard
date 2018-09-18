@@ -14,13 +14,6 @@ const Links = ( props ) => (
                     <a href = "http://www.facebook.com" style={{ width:100+"%"}} target="_blank"  className="w3-tag w3-small w3-theme-d4">Facebook </a>
                     <a href = "http://www.instagram.com" style={{ width:100+"%"}} target="_blank"  className="w3-tag w3-small w3-theme-d3">Instagram</a>
                     <a href = "http://www.instagram.com" style={{ width:100+"%"}} target="_blank"  className="w3-tag w3-small w3-theme-d3">Instagram</a>
-                    <span className="w3-tag w3-small w3-theme-d1">Friends</span>
-                    <span className="w3-tag w3-small w3-theme">Games</span>
-                    <span className="w3-tag w3-small w3-theme-l1">Friends</span>
-                    <span className="w3-tag w3-small w3-theme-l2">Food</span>
-                    <span className="w3-tag w3-small w3-theme-l3">Design</span>
-                    <span className="w3-tag w3-small w3-theme-l4">Art</span>
-                    <span className="w3-tag w3-small w3-theme-l5">Photos</span>
                 </p>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import FacebookLogin from "react-facebook-login";
+import { Redirect } from 'react-router-dom';
 
 // import db from "../../../../controllers/";
 import API from "../../utils/API";
@@ -65,7 +66,10 @@ componentDidMoun(){
   render() {
     let fbContent;
 
-    if (this.state.isLoggedIn) {
+    if (this.state.isLoggedIn || sessionStorage.getItem('userName')) {
+      
+        return (<Redirect to={'/home'}/>)
+      
       fbContent = (
         <div
           style={{
